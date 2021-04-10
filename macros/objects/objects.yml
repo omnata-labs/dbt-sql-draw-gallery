@@ -1,0 +1,44 @@
+version: 2
+
+macros:
+  - name: rainbow
+    description: |
+      This macro returns a rainbow, using concentric half circles.
+
+      For example usage, see the `blue_sky` model
+    arguments:
+      - name: center
+        type: list
+        description: A list containing the x and y coordinates of the centre of the rainbow (e.g. [50,75])
+      - name: height
+        type: number
+        description: The overall height of the rainbow
+      - name: stripe_height
+        type: number
+        description: The height of each stripe, naturally must be less than 1/6th the overall height to see all the colours
+
+  - name: chessboard
+    description: |
+      This macro returns a chessboard pattern (black and white squares).
+    arguments:
+      - name: width
+        type: number
+        description: The width (and height) of each square
+
+  - name: tessellating_rectangle
+    description: |
+      This macro returns a repeating pattern of rectangles and alternating colours
+    arguments:
+      - name: width
+        type: number
+        description: The width of each rectangle
+      - name: height
+        type: number
+        description: The height of each rectangle
+      - name: odd_colour
+        type: string
+        description: The first colour to use
+      - name: even_colour
+        type: string
+        description: The second colour to use
+

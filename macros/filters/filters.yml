@@ -1,0 +1,14 @@
+version: 2
+
+macros:
+  - name: blur
+    description: |
+      Blurs the image by setting each pixel to the average colour between it and it's neighbour.
+
+  - name: random_colour_from_mix
+    description: |
+      Returns a random colour based on a set of provided colours and probabilities
+    arguments:
+      - name: colour_mix
+        type: list
+        description: A list of mappings from colour to probability. For example, the input [['red',0.2],['green',0.2],['blue',0.6]] as a 60% chance of returning blue, and a 20% chance each of returning red or green.

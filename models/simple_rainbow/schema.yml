@@ -1,0 +1,9 @@
+
+version: 2
+
+models:
+    - name: blue_sky
+      description: A blue sky containing a rainbow and the sun
+
+    - name: green_grass
+      description: Just some basic grass

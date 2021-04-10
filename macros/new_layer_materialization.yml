@@ -1,0 +1,6 @@
+version: 2
+
+macros:
+  - name: new_layer
+    description: |
+      This materialization is used to add a new layer to an existing canvas. It assumes a single source model and merges the contents of this model onto it.

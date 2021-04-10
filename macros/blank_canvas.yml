@@ -1,0 +1,19 @@
+version: 2
+
+macros:
+  - name: blank_canvas
+    description: |
+      This macro is the starting point for creating a drawing. It provides a white image with the given dimensions.
+      To use it, simply call the macro as the entire model body:
+
+      ```
+      {{ '{{' }} blank_canvas(width=500, height=500) {{ '}}' }}
+      ```
+
+    arguments:
+      - name: width
+        type: number
+        description: The width of the canvas
+      - name: height
+        type: number
+        description: The height of the canvas

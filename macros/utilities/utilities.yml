@@ -1,0 +1,33 @@
+version: 2
+
+macros:
+  - name: colour_between
+    description: |
+      A naive RGB average between two hex colours
+    arguments:
+      - name: first_value_column
+        type: string
+        description: The column/calculation containing the first colour hex code
+      - name: second_value_column
+        type: string
+        description: The column/calculation containing the second colour hex code
+
+  - name: hex_to_rgb
+    description: |
+      Converts a hex code (e.g. #ffc864) to one of its three RGB parts (e.g. 255,200 or 100)
+    arguments:
+      - name: hex_code_column
+        type: string
+        description: The hex code
+      - name: which_part
+        type: int
+        description: Either 1, 2 or 3 indicating which part of the RGB code to return
+
+
+  - name: colour_code
+    description: |
+      Takes the common english name of a colour and returns a hex code
+    arguments:
+      - name: colour_name
+        type: string
+        description: The name of the colour, e.g. 'black', 'pale turquoise'

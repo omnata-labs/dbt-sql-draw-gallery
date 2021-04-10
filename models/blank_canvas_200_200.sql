@@ -1,0 +1,1 @@
+{{ blank_canvas(width=200, height=200) }}
