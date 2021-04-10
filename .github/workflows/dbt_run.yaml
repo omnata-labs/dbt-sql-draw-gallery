@@ -31,7 +31,7 @@ jobs:
       POSTGRES_PORT: 5432
       POSTGRES_DB_NAME: postgres
       POSTGRES_SCHEMA_NAME: artwork
-      DOCS_S3_BUCKET: omnata-sql-draw-docs
+      DOCS_S3_BUCKET: omnata-sql-draw-docs-prod
     
     steps:
       - name: Checkout current repo
