@@ -24,7 +24,7 @@ def connect_and_export():
         file_name=f"target/images/{table_name}.png"
         cur.execute(f"select string_agg ( colour, ',' order by x ) from {table_name} group by y order by y;")
         numpy_array = np.array(cur.fetchall()) #, dtype = [("x", float), ("y", float), ("colour", str)])
-        generate_image_file(numpy_array,file_name,True)
+        generate_image_file(numpy_array,file_name,False)
 
 
 def generate_image_file(numpy_array,file_path,show_grid):
