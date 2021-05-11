@@ -17,7 +17,7 @@ def connect_and_export():
     cur = conn.cursor()
 
     # Execute a command: this creates a new table
-    cur.execute(f"select table_name from information_schema.tables where table_schema='{os.environ['POSTGRES_SCHEMA_NAME']}' and table_name='test_25_25';")# and table_name='test_3_9';")
+    cur.execute(f"select table_name from information_schema.tables where table_schema='{os.environ['POSTGRES_SCHEMA_NAME']}';")# and table_name='test_3_9';")
     for row in cur.fetchall():
         table_name=row[0]
         print(f"Generating image from {table_name}")
