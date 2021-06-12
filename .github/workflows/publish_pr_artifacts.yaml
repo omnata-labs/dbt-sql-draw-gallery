@@ -1,0 +1,69 @@
+name: Publish docs from PR build
+
+# read-write repo token
+# access to secrets
+on:
+  workflow_run:
+    workflows: ["Pull Request processing"]
+    types:
+      - completed
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    if: >
+      ${{ github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: 'Download artifacts'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var fs = require('fs');
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+            matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "docs"
+            })[0];
+            download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            fs.writeFileSync('${{github.workspace}}/docs.zip', Buffer.from(download.data));
+      - run: |
+          unzip pr.zip
+          unzip docs.zip
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_IAM_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
+    
+      - name: 'Install AWS cli'
+        run: |
+          pip install awscli
+
+      - name: 'Copy docs to s3'
+        run: |
+          # get PR number
+          PR_NUMBER=`cat ./NR`
+          echo "PR number: $PR_NUMBER"
+          # copy the docs folder recursively over to s3
+          aws s3 cp target s3://${{ env.DOCS_S3_BUCKET }}/PR/$PR_NUMBER --recursive --acl public-read

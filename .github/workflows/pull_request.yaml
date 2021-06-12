@@ -1,6 +1,6 @@
-name: dbt run
+name: Pull Request processing
 # This workflow is triggered on pushes to the repository.
-on: [push]
+on: [pull_request]
 
 jobs:
   build:
@@ -35,13 +35,6 @@ jobs:
       - name: Checkout current repo
         uses: actions/checkout@v1
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_IAM_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_IAM_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-2
-
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -67,24 +60,20 @@ jobs:
           # Modifies the docs manifest.json to include images of each model
           python ./ci/add_image_links_to_manifest.py
 
-      - name: 'Install AWS cli'
+      - name: Save PR number
         run: |
-          pip install awscli
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: pr/
 
-      - name: 'Copy docs to s3'
-        run: |
-          # copy the docs folder recursively over to s3
-          aws s3 cp target s3://${{ env.DOCS_S3_BUCKET }}/ --recursive --acl public-read
-
-      - name: 'Concatenate all macros into one sql file, and copy to s3'
-        run: |
-          find macros -name '*.sql' -not -name 'new_layer_materialization.sql' -exec cat {} \; > all_macros.sql
-          aws s3 cp all_macros.sql s3://${{ env.DOCS_S3_BUCKET }}/all_macros.sql --acl public-read         
-
-      - name: 'Master builds - do something else'
-        if: contains(github.ref, 'main')
-        run: echo "hi"
-
+      - name: Save docs
+      - uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: target/
 
 
 
