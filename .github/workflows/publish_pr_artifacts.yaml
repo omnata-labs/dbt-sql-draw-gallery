@@ -14,6 +14,8 @@ jobs:
     if: >
       ${{ github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success' }}
+    env:
+      DOCS_S3_BUCKET: omnata-sql-draw-docs-prod
     steps:
       - name: 'Download artifacts'
         uses: actions/github-script@v3.1.0

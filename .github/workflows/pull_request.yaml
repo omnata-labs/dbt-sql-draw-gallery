@@ -29,7 +29,6 @@ jobs:
       POSTGRES_PORT: 5432
       POSTGRES_DB_NAME: postgres
       POSTGRES_SCHEMA_NAME: artwork
-      DOCS_S3_BUCKET: omnata-sql-draw-docs-prod
     
     steps:
       - name: Checkout current repo
@@ -64,7 +63,7 @@ jobs:
         run: |
           mkdir -p ./pr
           echo ${{ github.event.number }} > ./pr/NR
-          
+
       - uses: actions/upload-artifact@v2
         with:
           name: pr
