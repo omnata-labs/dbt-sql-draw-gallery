@@ -81,6 +81,6 @@ jobs:
             await github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: $PR_NUMBER,
-              body: 'Docs site for PR is available at: https://${{ env.DOCS_HOST }}/PR/$PR_NUMBER/index.html'
+              issue_number: ${{ env.PR_NUMBER }},
+              body: 'Docs site for PR is available at: https://${{ env.DOCS_HOST }}/PR/${{ env.PR_NUMBER }}/index.html'
             });
