@@ -47,7 +47,7 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/docs.zip', Buffer.from(download.data));
       - run: |
           unzip pr.zip
-          unzip docs.zip
+          unzip docs.zip -d docs
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -66,4 +66,4 @@ jobs:
           PR_NUMBER=`cat ./NR`
           echo "PR number: $PR_NUMBER"
           # copy the docs folder recursively over to s3
-          aws s3 cp target s3://${{ env.DOCS_S3_BUCKET }}/PR/$PR_NUMBER --recursive --acl public-read
+          aws s3 cp docs s3://${{ env.DOCS_S3_BUCKET }}/PR/$PR_NUMBER --recursive --acl public-read
