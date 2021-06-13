@@ -16,6 +16,7 @@ jobs:
       github.event.workflow_run.conclusion == 'success' }}
     env:
       DOCS_S3_BUCKET: omnata-sql-draw-docs-prod
+      DOCS_HOST: gallery.sqldraw.omnata.com
     steps:
       - name: 'Download artifacts'
         uses: actions/github-script@v3.1.0
@@ -69,3 +70,17 @@ jobs:
           echo "PR number: $PR_NUMBER"
           # copy the docs folder recursively over to s3
           aws s3 cp docs s3://${{ env.DOCS_S3_BUCKET }}/PR/$PR_NUMBER --recursive --acl public-read
+          # Keep for next step
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+
+      - name: 'Comment on PR'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: $PR_NUMBER,
+              body: 'Docs site for PR is available at: https://${{ env.DOCS_HOST }}/PR/$PR_NUMBER/index.html'
+            });
