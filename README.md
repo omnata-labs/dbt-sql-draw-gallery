@@ -4,7 +4,7 @@ This dbt project holds macros and models for drawing bitmaps via SQL.
 
 ## Shapes (circle, square, oval, etc)
 These are intended to define a boundary of pixels, without an opinion on colour or size.
-They return a conditional express, which will be true when the coordinate falls within the boundary of the shape. The user chooses the colour
+They return a conditional expression, which will be true when the coordinate falls within the boundary of the shape. The user chooses the colour
 Use like: 
 `update bitmap_pixels set colour = 'red' where {{ the_macro() }}`
 or
