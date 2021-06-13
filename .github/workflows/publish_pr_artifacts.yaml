@@ -9,7 +9,7 @@ on:
       - completed
 
 jobs:
-  upload:
+  publish-site-following-success:
     runs-on: ubuntu-latest
     if: >
       ${{ github.event.workflow_run.event == 'pull_request' &&
@@ -82,5 +82,46 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ env.PR_NUMBER }},
-              body: 'Docs site for PR is available at: https://${{ env.DOCS_HOST }}/PR/${{ env.PR_NUMBER }}/index.html'
+              body: 'Docs site for PR is available at: https://${{ env.DOCS_HOST }}/PR/${{ env.PR_NUMBER }}/index.html.\n Checklist:\n- No files modified outside of models/macros folders.\n- Any macro has an accompanying model to demonstrate.\n- Macros are properly documented\n- Don\'t permit people to change other people\'s drawings.'
+            });
+
+  notify-on-failure:
+    runs-on: ubuntu-latest
+    if: >
+      ${{ github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion != 'success' }}
+    steps:
+      - name: 'Download artifacts'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var fs = require('fs');
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+      - run: |
+          unzip pr.zip
+
+      - name: 'Comment on PR'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ env.PR_NUMBER }},
+              body: 'Automated build for PR failed'
             });
