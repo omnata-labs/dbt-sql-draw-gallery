@@ -113,6 +113,11 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: |
           unzip pr.zip
+          # get PR number
+          PR_NUMBER=`cat ./NR`
+          echo "PR number: $PR_NUMBER"
+          # Keep for next step
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
 
       - name: 'Comment on PR'
         uses: actions/github-script@v3
