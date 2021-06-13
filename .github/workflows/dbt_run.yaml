@@ -49,15 +49,17 @@ jobs:
 
       - name: 'Run dbt'
         run: |
+          set -e
           export POSTGRES_HOSTNAME=${{ env.POSTGRES_HOSTNAME }}
           export POSTGRES_USERNAME=${{ env.POSTGRES_USERNAME }}
           export POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }}
           chmod +x ./ci/run_dbt.sh
           ./ci/run_dbt.sh
-          mkdir target/images
 
       - name: 'Render images'
         run: |
+          set -e
+          mkdir target/images
           export POSTGRES_HOSTNAME=${{ env.POSTGRES_HOSTNAME }}
           export POSTGRES_USERNAME=${{ env.POSTGRES_USERNAME }}
           export POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }}
@@ -78,6 +80,7 @@ jobs:
 
       - name: 'Concatenate all macros into one sql file, and copy to s3'
         run: |
+          set -e
           find macros -name '*.sql' -not -name 'new_layer_materialization.sql' -exec cat {} \; > all_macros.sql
           aws s3 cp all_macros.sql s3://${{ env.DOCS_S3_BUCKET }}/all_macros.sql --acl public-read         
 
