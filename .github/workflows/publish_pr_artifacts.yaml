@@ -82,7 +82,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ env.PR_NUMBER }},
-              body: 'Docs site for PR is available at: https://${{ env.DOCS_HOST }}/PR/${{ env.PR_NUMBER }}/index.html.\n Checklist:\n- No files modified outside of models/macros folders.\n- Any macro has an accompanying model to demonstrate.\n- Macros are properly documented\n- Don\'t permit people to change other people\'s drawings.'
+              body: 'Docs site for PR is available at: https://${{ env.DOCS_HOST }}/PR/${{ env.PR_NUMBER }}/index.html.\n\n Please check the following before approving:\n- No files modified outside of models/macros folders.\n- Any macro has an accompanying model to demonstrate.\n- Macros are properly documented\n- Don\'t permit people to change other people\'s drawings.'
             });
 
   notify-on-failure:
