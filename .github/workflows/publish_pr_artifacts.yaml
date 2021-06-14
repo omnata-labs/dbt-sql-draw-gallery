@@ -11,9 +11,7 @@ on:
 jobs:
   publish-site-following-success:
     runs-on: ubuntu-latest
-    if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       DOCS_S3_BUCKET: omnata-sql-draw-docs-prod
       DOCS_HOST: gallery.sqldraw.omnata.com
@@ -89,9 +87,7 @@ jobs:
 
   notify-on-failure:
     runs-on: ubuntu-latest
-    if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'failure' }}
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
       - name: 'Download artifacts'
         uses: actions/github-script@v3.1.0
