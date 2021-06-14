@@ -22,6 +22,8 @@ jobs:
         uses: actions/github-script@v3.1.0
         with:
           script: |
+            console.log('conclusion','${{github.event.workflow_run.conclusion }}');
+            console.log('id','${{github.event.workflow_run.id }}');
             var fs = require('fs');
             var artifacts = await github.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
@@ -95,8 +97,8 @@ jobs:
         uses: actions/github-script@v3.1.0
         with:
           script: |
-            console.log(${{github.event.workflow_run }});
-            console.log('${{github.event.workflow_run.conclusion }}');
+            console.log('conclusion','${{github.event.workflow_run.conclusion }}');
+            console.log('id','${{github.event.workflow_run.id }}');
             var fs = require('fs');
             var artifacts = await github.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
