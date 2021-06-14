@@ -96,6 +96,7 @@ jobs:
         with:
           script: |
             console.log(${{github.event.workflow_run }});
+            console.log('${{github.event.workflow_run.conclusion }}');
             var fs = require('fs');
             var artifacts = await github.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
