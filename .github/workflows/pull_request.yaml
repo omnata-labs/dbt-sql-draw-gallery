@@ -34,6 +34,16 @@ jobs:
       - name: Checkout current repo
         uses: actions/checkout@v1
 
+      - name: Save PR number
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: pr/
+
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -58,16 +68,6 @@ jobs:
           python ./ci/render_images_from_db.py
           # Modifies the docs manifest.json to include images of each model
           python ./ci/add_image_links_to_manifest.py
-
-      - name: Save PR number
-        run: |
-          mkdir -p ./pr
-          echo ${{ github.event.number }} > ./pr/NR
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: pr
-          path: pr/
 
       - uses: actions/upload-artifact@v2
         with:
