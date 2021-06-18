@@ -24,7 +24,6 @@ def connect_and_export():
         file_name=f"target/images/{table_name}.png"
         cur.execute(f"select string_agg ( coalesce(colour,'#ffffff'), ',' order by x ) from {table_name} where y is not null group by y order by y;")
         result_set = cur.fetchall()
-        print(f"query results: {result_set}")
         numpy_array = np.array(result_set) #, dtype = [("x", float), ("y", float), ("colour", str)])
         generate_image_file(numpy_array,file_name,False)
 
