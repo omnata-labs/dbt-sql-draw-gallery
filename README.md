@@ -2,6 +2,29 @@
 
 This dbt project holds macros and models for drawing bitmaps via SQL.
 
+## Macro types
+There are three categories of SQL draw macro.
+
+### Pixel assertion
+Returns an expression that evaluates to true or false to indicate the coordinate has been selected. Can be used anywhere in the query.
+These should start with is_ or has_.
+Examples:
+ - Shapes, e.g. is_in_circle, is_oval
+
+## Colour selection
+Returns an expression that evaluates to a (varchar) colour value to nominate a colour.
+These should start with colour_of_
+
+Examples:
+- Objects, e.g. colour_of_rainbow
+- Filters, e.g. colour_blurred
+
+## Utility
+Performs some specific task, like format conversion, encoding, or a dictionary of values.
+Examples:
+- colour_code
+- hex_to_rgb
+
 ## Shapes (circle, square, oval, etc)
 These are intended to define a boundary of pixels, without an opinion on colour or size.
 They return a conditional express, which will be true when the coordinate falls within the boundary of the shape. The user chooses the colour

@@ -1,12 +1,12 @@
 version: 2
 
 macros:
-  - name: circle_filled
+  - name: is_in_circle_filled
     description: |
       This macro returns a boolean to indicate if the x and y values fall within the bounds of a circle.
       It's colour agnostic so, designed to be used like so:
       ```
-      when {{ '{{' }} circle_filled([150,150],20) {{ '}}' }} then 'yellow'
+      when {{ '{{' }} is_in_circle_filled([150,150],20) {{ '}}' }} then 'yellow'
       ```
 
       For example usage, see the `blue_sky` model.
@@ -18,12 +18,12 @@ macros:
         type: number
         description: The diameter of the circle
 
-  - name: oval_filled
+  - name: is_in_oval_filled
     description: |
       This macro returns a boolean to indicate if the x and y values fall within the bounds of an oval.
       It's colour agnostic so, designed to be used like so:
       ```
-      when {{ '{{' }} oval_filled([150,150],20,0.5,1) {{ '}}' }} then 'yellow'
+      when {{ '{{' }} is_in_oval_filled([150,150],20,0.5,1) {{ '}}' }} then 'yellow'
       ```
 
     arguments:
