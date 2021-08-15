@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 VENV="venv/bin/activate"
 
 if [[ ! -f $VENV ]]; then
