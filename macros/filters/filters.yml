@@ -1,11 +1,11 @@
 version: 2
 
 macros:
-  - name: blur
+  - name: colour_blurred
     description: |
       Blurs the image by setting each pixel to the average colour between it and it's neighbour.
 
-  - name: random_colour_from_mix
+  - name: colour_random_from_mix
     description: |
       Returns a random colour based on a set of provided colours and probabilities
     arguments:

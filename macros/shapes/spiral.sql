@@ -1,4 +1,4 @@
-{% macro spiral(center=[100,100],starting_point=0, step_size=0.1, total_length=100, outward_movement=2.71828, rotation=0, point_size=2.0) %}
+{% macro is_in_spiral_point(center=[100,100],starting_point=0, step_size=0.1, total_length=100, outward_movement=2.71828, rotation=0, point_size=2.0) %}
 ARRAY[x,y] in (
   with spiral_steps as (
     select * from generate_series({{ starting_point }}, {{ total_length }},{{ step_size }}) as step

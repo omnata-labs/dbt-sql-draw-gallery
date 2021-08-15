@@ -1,7 +1,7 @@
 version: 2
 
 macros:
-  - name: rainbow
+  - name: colour_rainbow
     description: |
       This macro returns a rainbow, using concentric half circles.
 
@@ -17,7 +17,7 @@ macros:
         type: number
         description: The height of each stripe, naturally must be less than 1/6th the overall height to see all the colours
 
-  - name: chessboard
+  - name: colour_chessboard
     description: |
       This macro returns a chessboard pattern (black and white squares).
     arguments:
@@ -25,7 +25,7 @@ macros:
         type: number
         description: The width (and height) of each square
 
-  - name: tessellating_rectangle
+  - name: colour_tessellating_rectangle
     description: |
       This macro returns a repeating pattern of rectangles and alternating colours
     arguments:
