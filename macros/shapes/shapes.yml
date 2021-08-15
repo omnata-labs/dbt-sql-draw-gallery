@@ -1,12 +1,12 @@
 version: 2
 
 macros:
-  - name: is_in_circle_filled
+  - name: is_in_circle
     description: |
       This macro returns a boolean to indicate if the x and y values fall within the bounds of a circle.
       It's colour agnostic so, designed to be used like so:
       ```
-      when {{ '{{' }} is_in_circle_filled([150,150],20) {{ '}}' }} then 'yellow'
+      when {{ '{{' }} is_in_circle([150,150],20) {{ '}}' }} then '#D2691E'
       ```
 
       For example usage, see the `blue_sky` model.
@@ -18,14 +18,13 @@ macros:
         type: number
         description: The diameter of the circle
 
-  - name: is_in_oval_filled
+  - name: is_in_oval
     description: |
       This macro returns a boolean to indicate if the x and y values fall within the bounds of an oval.
       It's colour agnostic so, designed to be used like so:
       ```
-      when {{ '{{' }} is_in_oval_filled([150,150],20,0.5,1) {{ '}}' }} then 'yellow'
+      when {{ '{{' }} is_in_oval([150,150],20,0.5,1) {{ '}}' }} then '#D2691E'
       ```
-
     arguments:
       - name: center
         type: list
@@ -39,4 +38,45 @@ macros:
       - name: ratio_y
         type: number
         description: How much to squash the oval horizontally (e.g. 0.5 means the oval's width will be half of its height)
-        
+
+  - name: is_in_rectangle
+    description: |
+      This macro returns a boolean to indicate if the x and y values fall within the bounds of an oval.
+      It's colour agnostic so, designed to be used like so:
+      ```
+      when {{ '{{' }} is_in_rectangle(bottom_left=[45,100], top_right=[50,120]) {{ '}}' }} then '#D2691E'
+      ```
+    arguments:
+      - name: bottom_left
+        type: list
+        description: A list containing the x and y coordinates of the bottom left point of the rectangle (e.g. [50,75])
+      - name: top_right
+        type: list
+        description: A list containing the x and y coordinates of the top right point of the rectangle (e.g. [150,125])
+
+  - name: is_in_spiral_point
+    description: |
+      This macro returns a boolean to indicate if the x and y values fall within points of a logarithmic spiral.
+      It's colour agnostic so, designed to be used like so:
+      ```
+      when {{ '{{' }} is_in_spiral_point(center=[50,50], step_size=0.1, outward_movement=1.9, starting_point=5, total_length=6, rotation=-1) {{ '}}' }} then '#D2691E'
+      ```
+    arguments:
+      - name: center
+        type: list
+        description: A list containing the x and y coordinates of the center point of the spiral (e.g. [50,75])
+      - name: starting_point
+        type: number
+        description: How many points away from the center to start drawing from
+      - name: step_size
+        type: number
+        description: The distance between each point on the spiral. The shorter the distance, the more obvious the path looks
+      - name: outward_movement
+        type: number
+        description: How quickly the spiral travels away from the center. The shorter the outward movement, the more rotations will be visible on the canvas
+      - name: total_length
+        type: number
+        description: The total length of the spiral. Once the spiral has left the bounds of the canvas, larger values have no effect
+      - name: rotation
+        type: number
+        description: Determines the direction that the spiral first sets off in

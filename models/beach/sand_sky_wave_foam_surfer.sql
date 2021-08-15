@@ -14,7 +14,7 @@ select x,y, case
     when point (x,y) <-> path '[({{ bl_x+8 }},{{bl_y+3}}),({{ bl_x+6 }},{{bl_y+3}})]' < 1 then '#F8E9CC' -- foot
     when point (x,y) <-> path '[({{ bl_x-1 }},{{bl_y+12}}),({{ bl_x-3 }},{{bl_y+12}})]' < 1 then '#F8E9CC' -- hand
     when point (x,y) <-> path '[({{ bl_x+9 }},{{bl_y+16}}),({{ bl_x+11 }},{{bl_y+16}})]' < 1 then '#F8E9CC' -- hand
-    when {{ is_in_oval_filled(center=[70,90], diameter=20, ratio_x=1,ratio_y=0.25, rotation=2.6) }} then '#D2691E' -- surfboard
+    when {{ is_in_oval(center=[70,90], diameter=20, ratio_x=1,ratio_y=0.25, rotation=2.6) }} then '#D2691E' -- surfboard
     else colour
     end as colour
 from {{ ref('sand_sky_wave_foam') }}

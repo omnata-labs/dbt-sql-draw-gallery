@@ -2,8 +2,14 @@
 version: 2
 
 models:
-    - name: blue_sky
-      description: A blue sky containing a rainbow and the sun
+    - name: sand_sky_wave_foam_surfer
+      description: A picture of a surfer enjoying a wave on a sunny day. Waves are built using logarithmic spirals, and the spray of the surf is generated using a random number.
 
-    - name: green_grass
-      description: Just some basic grass
+    - name: brick_wall_sky_mortar_cat_clouds
+      description: A cat standing on a brick wall on a nice day.
+
+    - name: chessboard
+      description: An empty chessboard
+      
+    - name: grass_sky_sun_rainbow_blurred
+      description: A rainbow, blurred to demonstrate a colour-based filter.

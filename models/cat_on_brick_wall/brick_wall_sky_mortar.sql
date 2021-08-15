@@ -8,5 +8,5 @@ select x,y,
         then '#BDBBBC'
     else colour
     end as colour
-from {{ ref('brick_wall_and_sky') }}
+from {{ ref('brick_wall_sky') }}
 where y<100
