@@ -30,6 +30,7 @@ jobs:
       POSTGRES_DB_NAME: postgres
       POSTGRES_SCHEMA_NAME: artwork
       DOCS_S3_BUCKET: omnata-sql-draw-docs-prod
+      CLOUDFRONT_DISTRIBUTION: E3V2BB197ECPA0
     
     steps:
       - name: Checkout current repo
@@ -81,9 +82,8 @@ jobs:
           find macros -name '*.sql' -not -name 'new_layer_materialization.sql' -exec cat {} \; > all_macros.sql
           aws s3 cp all_macros.sql s3://${{ env.DOCS_S3_BUCKET }}/all_macros.sql --acl public-read         
 
-      - name: 'Master builds - do something else'
-        if: contains(github.ref, 'main')
-        run: echo "hi"
+      - name: Invalidate cloudfront
+        run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION --paths "/"
 
 
 
