@@ -27,8 +27,6 @@ def connect_and_export():
         result_set = cur.fetchall()
         numpy_array = np.array(result_set) #, dtype = [("x", float), ("y", float), ("colour", str)])
         generate_image_file(numpy_array,file_name,draw_grid)
-    cur.execute(f"drop schema sql_draw cascade;")
-    cur.execute(f"create schema sql_draw;")
 
 def generate_image_file(numpy_array,file_path,show_grid):
 

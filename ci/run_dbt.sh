@@ -20,5 +20,5 @@ fi
 
 dbt deps --target postgres
 dbt seed --target postgres
-dbt run --target postgres
+dbt run --target postgres --full refresh
 dbt docs generate --target postgres
