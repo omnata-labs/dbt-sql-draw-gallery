@@ -18,6 +18,7 @@ def connect_and_export():
 
     # Execute a command: this creates a new table
     cur.execute(f"select table_name from information_schema.tables where table_schema='{os.environ['POSTGRES_SCHEMA_NAME']}';")# and table_name='test_3_9';")
+    draw_grid = True if "GRID" in os.environ else False
     for row in cur.fetchall():
         table_name=row[0]
         print(f"Generating image from {table_name}")
@@ -25,8 +26,9 @@ def connect_and_export():
         cur.execute(f"select string_agg ( coalesce(colour,'#ffffff'), ',' order by x ) from {table_name} where y is not null group by y order by y;")
         result_set = cur.fetchall()
         numpy_array = np.array(result_set) #, dtype = [("x", float), ("y", float), ("colour", str)])
-        generate_image_file(numpy_array,file_name,False)
-
+        generate_image_file(numpy_array,file_name,draw_grid)
+    cur.execute(f"drop schema sql_draw cascade;")
+    cur.execute(f"create schema sql_draw;")
 
 def generate_image_file(numpy_array,file_path,show_grid):
 
