@@ -1,17 +1,35 @@
 {% macro is_on_bezier_curve(control_points,interval=0.01) %}
+{% set bound = namespace(x_min=0,x_max=0,y_min=0,y_max=0) %}
+{# -- Check that 3 or 4 control points were provided #}
 {% set control_point_count = control_points | length %}
 {% if control_point_count < 3 or control_point_count > 4 %}
     {% set error_message %}control_points must contain a list of either 3 or 4 coordinate pairs (e.g. [[0,0],[50,50],[100,0]] or [[0,20],[40,70],[50,10],[80,80]]){% endset %}
     --{{ None['[ERROR] ' ~ error_message ][0] }}
 {%- endif -%}
+{# -- Find the overall boundaries #}
+{% for control_point in control_points %}
+  {% if control_point[0] < bound.x_min %}
+    {% set bound.x_min = control_point[0] %}
+  {% endif %}
+  {% if control_point[0] > bound.x_max %}
+    {% set bound.x_max = control_point[0] %}
+  {% endif %}
+  {% if control_point[1] < bound.y_min %}
+    {% set bound.y_min = control_point[1] %}
+  {% endif %}
+  {% if control_point[1] > bound.y_max %}
+    {% set bound.y_max = control_point[1] %}
+  {% endif %}
+{% endfor %}
+
 exists (
 with 
 -- generate all the t values
 t_series as (select * from generate_series(0,1,{{ interval }}) as t),
 -- collect all possible x values
-x_values as (select distinct x from bitmap_pixels),
+x_values as (select * from generate_series({{bound.x_min}},{{bound.x_max}},1) as x),
 -- collect all possible y values
-y_values as (select distinct y from bitmap_pixels),
+y_values as (select * from generate_series({{bound.y_min}},{{bound.y_max}},1) as y),
 -- for each t value, find the values of x that overlap
 t_for_x as (
   select t,x as x_match
