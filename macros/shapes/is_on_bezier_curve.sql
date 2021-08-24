@@ -6,9 +6,13 @@
 {%- endif -%}
 exists (
 with 
+-- generate all the t values
 t_series as (select * from generate_series(0,1,{{ interval }}) as t),
+-- collect all possible x values
 x_values as (select distinct x from bitmap_pixels),
+-- collect all possible y values
 y_values as (select distinct y from bitmap_pixels),
+-- for each t value, find the values of x that overlap
 t_for_x as (
   select t,x as x_match
   from t_series,x_values
@@ -24,6 +28,7 @@ t_for_x as (
      (t^3*{{ control_points[3][0] }})          )::int = x
   {% endif %}
 ),
+-- for each t value, find the values of y that overlap
 t_for_y as (
   select t,y as y_match
   from t_series,y_values
@@ -39,11 +44,13 @@ t_for_y as (
      (t^3*{{ control_points[3][1] }})          )::int = y
   {% endif %}
 ),
+-- join on t to get all combinations of x and y
 points_in_common as(
   select x_match,y_match
   from t_for_x
   join t_for_y on t_for_x.t = t_for_y.t
 )
+-- match back to the outer query
 select 1
 from points_in_common 
 where x = points_in_common.x_match and y = points_in_common.y_match
