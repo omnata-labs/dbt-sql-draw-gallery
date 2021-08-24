@@ -80,3 +80,19 @@ macros:
       - name: rotation
         type: number
         description: Determines the direction that the spiral first sets off in
+
+  - name: is_on_bezier_curve
+    description: |
+      This macro returns a boolean to indicate if the x and y values fall within points of a calculated bezier curve.
+      For a detailed description of the maths behind this macro, see this page: https://javascript.info/bezier-curve#maths
+      It's colour agnostic so, designed to be used like so:
+      ```
+      when {{ '{{' }} is_on_bezier_curve(control_points=[[0,0],[50,50],[100,0]], interval=0.01) {{ '}}' }} then '#D2691E'
+      ```
+    arguments:
+      - name: control_points
+        type: list
+        description: A list of lists containing the x and y coordinates of each of the control points (e.g. [[0,20],[40,70],[50,10],[80,80]])
+      - name: interval
+        type: number
+        description: The t interval as described in the link above. The larger the values, the further apart the curve points will be. For a 100x100 canvas, a value of 0.01 ensures a solid line (100 points between 0 and 1).
