@@ -28,17 +28,51 @@ def connect_and_export():
         numpy_array = np.array(result_set) #, dtype = [("x", float), ("y", float), ("colour", str)])
         generate_image_file(numpy_array,file_name,draw_grid)
 
+def string_to_rgb(colour_string_list):
+    rgb_triple_array = []
+    for colour_string in colour_string_list:
+        if len(colour_string) < 4:
+            raise ValueError(f"Invalid colour (too short): {colour_string}")
+        if colour_string[0:3]=='rgb':
+            # rgb string, e.g. rgb(0,0,255) or rgb(0.5,0.5,0.7)
+            try:
+                component_string_list = colour_string.replace("rgb(", "").replace(")", "").split(',')
+                rgb_array=[]
+                for component_string in component_string_list:
+                    float_val = float(component_string)
+                    if float_val > 0 and float_val < 1:
+                        rgb_array.append(round(255*float_val))
+                    else:
+                        rgb_array.append(int(float_val))
+                rgb_triple_array.append(rgb_array)
+            except:
+                raise ValueError(f"Could not parse rgb colour: {colour_string}")
+        elif colour_string[0]=='#':
+            # 6 character hex, e.g. #FF0000
+            if len(colour_string)==7:
+                try:
+                    rgb_triple_array.append([int(colour_string[1:3],16),int(colour_string[3:5],16),int(colour_string[5:7],16)])
+                except:
+                    raise ValueError(f"Could not parse 6 character hex colour: {colour_string}")
+            # 3 character hex, e.g. #6A7
+            elif len(colour_string)==4:
+                try:
+                    rgb_triple_array.append([int(colour_string[1:2],16),int(colour_string[2:3],16),int(colour_string[3:4],16)])
+                except:
+                    raise ValueError(f"Could not parse 3 character hex colour: {colour_string}")
+            else:
+                raise ValueError(f"Hex colours must be 3 or 6 characters in length: {colour_string}")
+        else:
+            raise ValueError(f"Unknown colour format: {colour_string}")
+    return rgb_triple_array
+
 def generate_image_file(numpy_array,file_path,show_grid):
-
-    def hex_to_rgb(hex):
-        return [[int(x[1:3],16),int(x[3:5],16),int(x[5:7],16)] for x in hex]
-
     fig, ax = plt.subplots()
     # Array comes in as a comma separated list of hex colours, one for each row of the image.
     # We split them into a 2d array, then convert each hex code into a [r,g,b] array of ints.
     # The end result is a 3d array of x,y,(colour components)
     split_colours = np.char.split(numpy_array, sep =',')
-    colours_rgb = np.array([hex_to_rgb(xi) for xi in split_colours[:,0].tolist()])
+    colours_rgb = np.array([string_to_rgb(xi) for xi in split_colours[:,0].tolist()])
     height=len(colours_rgb)
     width=len(colours_rgb[0])
 
