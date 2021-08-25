@@ -12,3 +12,19 @@ macros:
       - name: colour_mix
         type: list
         description: A list of mappings from colour to probability. For example, the input [['red',0.2],['green',0.2],['blue',0.6]] as a 60% chance of returning blue, and a 20% chance each of returning red or green.
+
+
+  - name: is_near_edge
+    description: |
+      This macro returns a boolean to indicate if the x and y values fall near an edge (a change in pixel colour)
+      It's colour agnostic so, designed to be used like so:
+      ```
+      when {{ '{{' }} is_near_edge(distance=4,density_at_distance=[1,1,0.9,0.8]) {{ '}}' }} then '#D2691E'
+      ```
+    arguments:
+      - name: distance
+        type: number
+        description: When an edge is discovered, the number of pixels either side to include
+      - name: interval
+        type: list
+        description: A list of probabilities for each layer, from inner to outer, to provide a brush effect. For example, a value of [1,1,0.6] would mean that the outer pixel has a 60% chance of being selected

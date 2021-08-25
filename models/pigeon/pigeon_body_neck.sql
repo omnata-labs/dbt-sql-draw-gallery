@@ -5,7 +5,7 @@ with parent as(
 neck_curve_1 as (
     select x,y 
     from parent 
-    where {{ is_on_bezier_curve(control_points=[[390,400],[390,500],[425,600]],interval=0.001) }}
+    where {{ is_on_bezier_curve(control_points=[[387,400],[387,500],[425,600]],interval=0.001) }}
 ),
 neck_curve_2 as (
     select x,y 
