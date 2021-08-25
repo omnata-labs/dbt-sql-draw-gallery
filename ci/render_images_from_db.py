@@ -23,7 +23,7 @@ def connect_and_export():
         table_name=row[0]
         print(f"Generating image from {table_name}")
         file_name=f"target/images/{table_name}.png"
-        cur.execute(f"select string_agg ( coalesce(colour,'#ffffff'), ',' order by x ) from {table_name} where y is not null group by y order by y;")
+        cur.execute(f"select string_agg ( coalesce(colour,'#ffffff'), '|' order by x ) from {table_name} where y is not null group by y order by y;")
         result_set = cur.fetchall()
         numpy_array = np.array(result_set) #, dtype = [("x", float), ("y", float), ("colour", str)])
         generate_image_file(numpy_array,file_name,draw_grid)
@@ -71,7 +71,7 @@ def generate_image_file(numpy_array,file_path,show_grid):
     # Array comes in as a comma separated list of hex colours, one for each row of the image.
     # We split them into a 2d array, then convert each hex code into a [r,g,b] array of ints.
     # The end result is a 3d array of x,y,(colour components)
-    split_colours = np.char.split(numpy_array, sep =',')
+    split_colours = np.char.split(numpy_array, sep ='|')
     colours_rgb = np.array([string_to_rgb(xi) for xi in split_colours[:,0].tolist()])
     height=len(colours_rgb)
     width=len(colours_rgb[0])
