@@ -1,4 +1,5 @@
 {% macro is_near_edge(distance=1,density_at_distance=[1]) %}
+    {% set density_distances = density_at_distance | length %}
     {% for i in range(1,distance) %}
     (
         {% if i <= density_distances and density_at_distance[i-1] < 1 %}
