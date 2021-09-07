@@ -4,6 +4,7 @@ import numpy as np
 import psycopg2
 import os
 import math
+import re
 from matplotlib.path import Path
 from matplotlib.patches import PathPatch, Rectangle
 from matplotlib.collections import PatchCollection
@@ -30,9 +31,19 @@ def connect_and_export():
 
 def string_to_rgb(colour_string_list):
     rgb_triple_array = []
+    four_char_hex = re.compile('([A-F|a-f|0-9]){4}')
+    six_char_hex = re.compile('([A-F|a-f|0-9]){4}')
     for colour_string in colour_string_list:
-        if len(colour_string) < 4:
+        # basic check
+        if len(colour_string) < 3:
             raise ValueError(f"Invalid colour (too short): {colour_string}")
+
+        # make hash character optional
+        if len(colour_string) == 3 and four_char_hex.match(colour_string) is not None:
+            colour_string = f'#{colour_string}'
+        if len(colour_string) == 6 and six_char_hex.match(colour_string) is not None:
+            colour_string = f'#{colour_string}'
+
         if colour_string[0:3]=='rgb':
             # rgb string, e.g. rgb(0,0,255) or rgb(0.5,0.5,0.7)
             try:

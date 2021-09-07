@@ -14,7 +14,7 @@ neck_curve_2 as (
 )
 select parent.x,parent.y, 
     case 
-        when parent.y between 500 and 550 then '#ffffff' -- white band on neck
+        when parent.y between 500 and 550 then 'ffffff' -- white band on neck
         else '#B4D3D5' 
     end as colour
 from parent,neck_curve_1,neck_curve_2
