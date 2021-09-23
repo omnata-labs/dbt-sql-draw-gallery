@@ -31,13 +31,16 @@ macros:
         description: A list containing the x and y coordinates of the centre of the oval (e.g. [50,75])
       - name: diameter
         type: number
-        description: The diameter of the oval
+        description: The diameter of the oval. This is given as the diameter of an unsquashed axis (e.g. a value of 100 along with a ratio_x of 0.5, would mean the oval is actually 50 pixels wide)
       - name: ratio_x
         type: number
         description: How much to squash the oval vertically (e.g. 0.5 means the oval's height will be half of its width)
       - name: ratio_y
         type: number
         description: How much to squash the oval horizontally (e.g. 0.5 means the oval's width will be half of its height)
+      - name: rotation
+        type: number
+        description: The angle to rotate the oval, where the value of pi (~3.1) represents a full 360 rotation.
 
   - name: is_in_rectangle
     description: |
