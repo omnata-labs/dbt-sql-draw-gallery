@@ -32,7 +32,8 @@ macros:
       It's colour agnostic so, designed to be used like so:
       ```
       when {{ '{{' }} is_near_edge(distance=4,density_at_distance=[1,1,0.9,0.8]) {{ '}}' }} then '#D2691E'
-      ```.
+      ```
+      
       *Note*: Because this macro contains window functions, Postgres will not allow it to be used directly in an UPDATE statement.
       Instead, use a CTE like so:
       ```
