@@ -19,3 +19,21 @@ macros:
       - name: width
         type: number
         description: The full diameter of the pig's body. Anything smaller than 40, the pig starts to look a bit wierd
+  - name: donkey
+    description: |
+      This macro draws a donkey!
+      It's designed to be used within Slack, like so:
+      ```
+      update bitmap_pixels set colour=
+      {{ '{{' }} donkey(x=200,y=20,width=80) {{ '}}' }}
+      ```
+    arguments:
+      - name: x
+        type: number
+        description: The x coordinate, this will be the middle of the donkey
+      - name: y
+        type: number
+        description: The y coordinate, this will be the base of the donkey
+      - name: width
+        type: number
+        description: The full diameter of the donkey's body. Anything smaller than 40, the donkey starts to look a bit wierd
