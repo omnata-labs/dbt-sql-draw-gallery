@@ -19,11 +19,11 @@ case
          or point (x,y) <@ circle '(({{x+(width*0.125)}},{{y}}),{{width*0.125}})') 
          and y > {{y}} then '#3E2323'
   -- head
-  when point (x,y) <@ circle '(({{x}},{{y+(width*0.75)}}),{{width*0.375}})' then 'rgb(247,198,198)' 
-  when point (x,y) <@ circle '(({{x}},{{y+(width*0.75)}}),{{width*0.375+1}})' then '#000000'  
+  when point (x,y) <@ circle '(({{x}},{{y+(width*0.75)}}),{{width*0.375-1}})' then 'rgb(247,198,198)' 
+  when point (x,y) <@ circle '(({{x}},{{y+(width*0.75)}}),{{width*0.375}})' then '#000000'  
   -- body
-  when point (x,y) <@ circle '(({{x}},{{y+(width/2)}}),{{width/2}})' then 'rgb(247,191,181)' 
-  when point (x,y) <@ circle '(({{x}},{{y+(width/2)}}),{{width/2+1}})' then '#000000'
+  when point (x,y) <@ circle '(({{x}},{{y+(width/2)}}),{{width/2-1}})' then 'rgb(247,191,181)' 
+  when point (x,y) <@ circle '(({{x}},{{y+(width/2)}}),{{width/2}})' then '#000000'
   -- ears
   when {{ is_in_oval(center=[x-(width*0.1625),y+(width*1.0625)], diameter=(width*0.3125), ratio_x=1,ratio_y=0.6, rotation=0.7) }} then 'rgb(247,191,181)'
   when {{ is_in_oval(center=[x-(width*0.1625),y+(width*1.0625)], diameter=(width*0.3125+2), ratio_x=1,ratio_y=0.6, rotation=0.7) }} then '#000000'
