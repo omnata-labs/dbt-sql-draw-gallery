@@ -7,7 +7,7 @@ macros:
       It's designed to be used within Slack, like so:
       ```
       update bitmap_pixels set colour=
-      {{ '{{' }} pig(x=200,y=20,width=80) {{ '}}' '}}
+      {{ '{{' }} pig(x=200,y=20,width=80) {{ '}}' }}
       ```
     arguments:
       - name: x
