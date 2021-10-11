@@ -26,9 +26,7 @@ macros:
     arguments:
       - name: colour_mix
         type: list
-        description: |
-        A list of mappings from colour to probability. For example, the input [['#110000',0.2],['#660000',0.2],['#ff0000',0.6]] as a 60% chance of returning '#ff0000', and a 20% chance each of returning '#660000' or '#110000'.
-
+        description: A list of mappings from colour to probability. For example, the input [['#110000',0.2],['#660000',0.2],['#ff0000',0.6]] as a 60% chance of returning '#ff0000', and a 20% chance each of returning '#660000' or '#110000'.
 
   - name: is_near_edge
     description: |
