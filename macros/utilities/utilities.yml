@@ -3,7 +3,10 @@ version: 2
 macros:
   - name: colour_between
     description: |
-      A naive RGB average between two hex colours
+      A naive RGB average between two hex colours.
+
+      This macro was built for the colour_blurred macro, but could have other applications.
+
     arguments:
       - name: first_value_column
         type: string
@@ -14,7 +17,10 @@ macros:
 
   - name: hex_to_rgb
     description: |
-      Converts a hex code (e.g. #ffc864) to one of its three RGB parts (e.g. 255,200 or 100)
+      Converts a hex code (e.g. #ffc864) to one of its three RGB parts (e.g. 255,200 or 100).
+
+      This macro was built for the colour_between macro, but could have other applications.
+
     arguments:
       - name: hex_code_column
         type: string
@@ -26,7 +32,13 @@ macros:
 
   - name: colour_code
     description: |
-      Takes the common english name of a colour and returns a hex code
+      Takes the common english name of a colour and returns a hex code.
+
+      Slack-friendly example:
+      ```
+      update bitmap_pixels set colour = {{ '{{' }} colour_code("dark turquoise") {{ '}}' }}
+      ```
+
     arguments:
       - name: colour_name
         type: string

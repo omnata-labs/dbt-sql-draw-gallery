@@ -3,13 +3,13 @@ version: 2
 macros:
   - name: is_in_circle
     description: |
-      This macro returns a boolean to indicate if the x and y values fall within the bounds of a circle.
-      It's colour agnostic so, designed to be used like so:
-      ```
-      when {{ '{{' }} is_in_circle([150,150],20) {{ '}}' }} then '#D2691E'
-      ```
+      This macro returns a boolean expression to indicate if the x and y values fall within the bounds of a circle.
 
-      For example usage, see the `blue_sky` model.
+      Slack-friendly example:
+      ```
+      update bitmap_pixels set colour = '#D2691E'
+      where {{ '{{' }} is_in_circle([150,150],20) {{ '}}' }}
+      ```
     arguments:
       - name: center
         type: list
@@ -20,11 +20,14 @@ macros:
 
   - name: is_in_oval
     description: |
-      This macro returns a boolean to indicate if the x and y values fall within the bounds of an oval.
-      It's colour agnostic so, designed to be used like so:
+      This macro returns a boolean expression to indicate if the x and y values fall within the bounds of an oval.
+
+      Slack-friendly example:
       ```
-      when {{ '{{' }} is_in_oval([150,150],20,0.5,1) {{ '}}' }} then '#D2691E'
+      update bitmap_pixels set colour = '#D2691E'
+      where {{ '{{' }} is_in_oval([150,150],20,0.5,1) {{ '}}' }}
       ```
+
     arguments:
       - name: center
         type: list
@@ -44,11 +47,14 @@ macros:
 
   - name: is_in_rectangle
     description: |
-      This macro returns a boolean to indicate if the x and y values fall within the bounds of an oval.
-      It's colour agnostic so, designed to be used like so:
+      This macro returns a boolean expression to indicate if the x and y values fall within the bounds of an oval.
+
+      Slack-friendly example:
       ```
-      when {{ '{{' }} is_in_rectangle(bottom_left=[45,100], top_right=[50,120]) {{ '}}' }} then '#D2691E'
+      update bitmap_pixels set colour = '#D2691E'
+      where {{ '{{' }} is_in_rectangle(bottom_left=[45,100], top_right=[50,120]) {{ '}}' }}
       ```
+
     arguments:
       - name: bottom_left
         type: list
@@ -59,11 +65,14 @@ macros:
 
   - name: is_in_spiral_point
     description: |
-      This macro returns a boolean to indicate if the x and y values fall within points of a logarithmic spiral.
-      It's colour agnostic so, designed to be used like so:
+      This macro returns a boolean expression to indicate if the x and y values fall within points of a logarithmic spiral.
+
+      Slack-friendly example:
       ```
-      when {{ '{{' }} is_in_spiral_point(center=[50,50], step_size=0.1, outward_movement=1.9, starting_point=5, total_length=6, rotation=-1) {{ '}}' }} then '#D2691E'
+      update bitmap_pixels set colour = '#D2691E'
+      where {{ '{{' }} is_in_spiral_point(center=[50,50], step_size=0.1, outward_movement=1.9, starting_point=5, total_length=6, rotation=-1) {{ '}}' }}
       ```
+
     arguments:
       - name: center
         type: list
@@ -86,12 +95,15 @@ macros:
 
   - name: is_on_bezier_curve
     description: |
-      This macro returns a boolean to indicate if the x and y values fall within points of a calculated bezier curve.
+      This macro returns a boolean expression to indicate if the x and y values fall within points of a calculated bezier curve.
       For a detailed description of the maths behind this macro, see this page: https://javascript.info/bezier-curve#maths
-      It's colour agnostic so, designed to be used like so:
+
+      Slack-friendly example:
       ```
-      when {{ '{{' }} is_on_bezier_curve(control_points=[[0,0],[50,50],[100,0]], interval=0.01) {{ '}}' }} then '#D2691E'
+      update bitmap_pixels set colour = '#D2691E'
+      where {{ '{{' }} is_on_bezier_curve(control_points=[[0,0],[50,50],[100,0]], interval=0.01) {{ '}}' }}
       ```
+
     arguments:
       - name: control_points
         type: list

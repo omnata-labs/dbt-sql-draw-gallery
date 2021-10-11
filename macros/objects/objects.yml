@@ -1,11 +1,29 @@
 version: 2
 
 macros:
+  - name: colour_chessboard
+    description: |
+      This macro returns a chessboard pattern (black and white squares).
+
+      Slack-friendly example:
+      ```
+      update bitmap_pixels set colour = {{ '{{' }} colour_chessboard(width=10) {{ '}}' }}
+      ```
+
+    arguments:
+      - name: width
+        type: number
+        description: The width (and height) of each square
+
   - name: colour_rainbow
     description: |
       This macro returns a rainbow, using concentric half circles.
 
-      For example usage, see the `blue_sky` model
+      Slack-friendly example:
+      ```
+      update bitmap_pixels set colour = {{ '{{' }} colour_rainbow(center=[100,100], height=150,stripe_height=10) {{ '}}' }}
+      ```
+
     arguments:
       - name: center
         type: list
@@ -17,17 +35,15 @@ macros:
         type: number
         description: The height of each stripe, naturally must be less than 1/6th the overall height to see all the colours
 
-  - name: colour_chessboard
-    description: |
-      This macro returns a chessboard pattern (black and white squares).
-    arguments:
-      - name: width
-        type: number
-        description: The width (and height) of each square
-
   - name: colour_tessellating_rectangle
     description: |
-      This macro returns a repeating pattern of rectangles and alternating colours
+      This macro returns a repeating pattern of rectangles and alternating colours.
+
+      Slack-friendly example:
+      ```
+      update bitmap_pixels set colour = {{ '{{' }} colour_tessellating_rectangle(width=10,height=20,odd_colour='#ffffff',even_colour='#000000') {{ '}}' }}
+      ```
+
     arguments:
       - name: width
         type: number

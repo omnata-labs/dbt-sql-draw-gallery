@@ -6,8 +6,7 @@ macros:
       Blurs the image by setting each pixel to the average colour between it and it's neighbour.
       For an example in this repository see the simple_rainbow artwork.
       
-      *Note*: Because this macro contains window functions, Postgres will not allow it to be used directly in an UPDATE statement.
-      Instead, use a CTE like so:
+      Slack-friendly example:
       ```
       update bitmap_pixels set colour = new_pixels.colour
       from (
@@ -23,19 +22,22 @@ macros:
     arguments:
       - name: colour_mix
         type: list
-        description: A list of mappings from colour to probability. For example, the input [['#110000',0.2],['#660000',0.2],['#ff0000',0.6]] as a 60% chance of returning '#ff0000', and a 20% chance each of returning '#660000' or '#110000'.
+        description: |
+        A list of mappings from colour to probability. For example, the input [['#110000',0.2],['#660000',0.2],['#ff0000',0.6]] as a 60% chance of returning '#ff0000', and a 20% chance each of returning '#660000' or '#110000'.
+
+        Slack-friendly example:
+        ```
+        update bitmap_pixels set colour = {{ '{{' }} colour_random_from_mix(colour_mix=[['#68170C',0.6],['#5F0D07',0.2],['#660D07',0.1],['#6A130C',0.1]]) {{ '}}' }}
+        ```
 
 
   - name: is_near_edge
     description: |
-      This macro returns a boolean to indicate if the x and y values fall near an edge (a change in pixel colour)
-      It's colour agnostic so, designed to be used like so:
-      ```
-      when {{ '{{' }} is_near_edge(distance=4,density_at_distance=[1,1,0.9,0.8]) {{ '}}' }} then '#D2691E'
-      ```
+      This macro returns a boolean to indicate if the x and y values fall near an edge (a change in pixel colour).
       
-      *Note*: Because this macro contains window functions, Postgres will not allow it to be used directly in an UPDATE statement.
-      Instead, use a CTE like so:
+      It can be used to draw a sharp outline around shapes.
+
+      Slack-friendly example:
       ```
       update bitmap_pixels set colour = new_pixels.colour
       from (
@@ -45,10 +47,11 @@ macros:
       ) new_pixels 
       where new_pixels.x=bitmap_pixels.x and new_pixels.y=bitmap_pixels.y;
       ```
+      
     arguments:
       - name: distance
         type: number
-        description: When an edge is discovered, the number of pixels either side to include
+        description: When an edge is discovered, the number of pixels either side to include. A larger number results in a thicker line.
       - name: interval
         type: list
         description: A list of probabilities for each layer, from inner to outer, to provide a brush effect. For example, a value of [1,1,0.6] would mean that the outer pixel has a 60% chance of being selected
