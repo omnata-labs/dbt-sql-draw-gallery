@@ -19,16 +19,15 @@ macros:
   - name: colour_random_from_mix
     description: |
       Returns a random colour based on a set of provided colours and probabilities
+      Slack-friendly example:
+      ```
+      update bitmap_pixels set colour = {{ '{{' }} colour_random_from_mix(colour_mix=[['#68170C',0.6],['#5F0D07',0.2],['#660D07',0.1],['#6A130C',0.1]]) {{ '}}' }}
+      ```
     arguments:
       - name: colour_mix
         type: list
         description: |
         A list of mappings from colour to probability. For example, the input [['#110000',0.2],['#660000',0.2],['#ff0000',0.6]] as a 60% chance of returning '#ff0000', and a 20% chance each of returning '#660000' or '#110000'.
-
-        Slack-friendly example:
-        ```
-        update bitmap_pixels set colour = {{ '{{' }} colour_random_from_mix(colour_mix=[['#68170C',0.6],['#5F0D07',0.2],['#660D07',0.1],['#6A130C',0.1]]) {{ '}}' }}
-        ```
 
 
   - name: is_near_edge
