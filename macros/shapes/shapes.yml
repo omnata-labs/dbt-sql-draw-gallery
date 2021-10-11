@@ -101,7 +101,7 @@ macros:
       Slack-friendly example:
       ```
       update bitmap_pixels set colour = '#D2691E'
-      where {{ '{{' }} is_on_bezier_curve(control_points=[[0,0],[50,50],[100,0]], interval=0.01) {{ '}}' }}
+      where {{ '{{' }} is_on_bezier_curve(control_points=[[20,20],[50,100],[70,10]], interval=0.01) {{ '}}' }}
       ```
 
     arguments:

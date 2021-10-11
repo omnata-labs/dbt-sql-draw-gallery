@@ -18,7 +18,8 @@ macros:
       ```
   - name: colour_random_from_mix
     description: |
-      Returns a random colour based on a set of provided colours and probabilities
+      Returns a random colour based on a set of provided colours and probabilities.
+      
       Slack-friendly example:
       ```
       update bitmap_pixels set colour = {{ '{{' }} colour_random_from_mix(colour_mix=[['#68170C',0.6],['#5F0D07',0.2],['#660D07',0.1],['#6A130C',0.1]]) {{ '}}' }}
